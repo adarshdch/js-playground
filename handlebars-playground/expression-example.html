@@ -1,0 +1,81 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Handlebars Playground - Expressions Example</title>
+    <script type="text/javascript" src="js/jquery-2.2.1.min.js"></script>
+    <script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
+    <script type="text/javascript">
+        //It is necessary to execute your DOM manipulation only after DOM has been loaded. Otherwise it may not work as expected.
+        $(document).ready(function(){
+            //Get the handlebars template html
+            var simpleExpressionTemplate = $("#simple-expressions-template").html(); 
+            var blockExpressionTemplate = $("#block-expressions-template").html(); 
+
+            //Compile the template
+            var compiledSimpleExpressionTemplate = Handlebars.compile(simpleExpressionTemplate); 
+            var compiledBlockExpressionTemplate = Handlebars.compile(blockExpressionTemplate); 
+
+            var data = {
+                people: [
+                {
+                    firstName: "Adarsh",
+                    lastName: "Kumar",
+                    bioData: "I am a '<em>Software Developer</em>'"
+                },
+                {
+                    firstName: "Amit",
+                    lastName: "Sinha",
+                    bioData: "I am a '<em>Tester</em>'"
+                }
+                ]
+            };
+
+            Handlebars.registerHelper('list', function(items, options) {
+              var out = "<ul>";
+
+              for(var i=0, l=items.length; i<l; i++) {
+                out = out + "<li>" + options.fn(items[i]) + "</li>";
+              }
+
+              return out + "</ul>";
+            });
+
+            //Pass the data to be processed to the template
+            var simpleExpressionTemplateWithData = compiledSimpleExpressionTemplate(data.people[0]);
+            var blockExpressionTemplateWithData = compiledBlockExpressionTemplate(data);
+
+            //Render the transformed html on page
+            $('#simple-expressions').html(simpleExpressionTemplateWithData);
+            $('#block-expressions').html(blockExpressionTemplateWithData);
+        });
+    </script>
+</head>
+
+<body>
+    <h1>This example demonstrates the handlebars expression.</h1>
+    <h2>Simple Expressions</h2>
+    <!-- Create the handlebars template -->
+    <script id="simple-expressions-template" type="text/x-handlebars-template"> 
+        First Name: {{firstName}}<br/>
+        Last Name: {{lastName}}<br/>
+        Bio Data (with escape): {{bioData}}<br/>
+        Bio Data (without escape): {{{bioData}}}
+    </script>
+    <div id="simple-expressions"></div>
+
+    <h2>Block Expressions</h2>
+    <p>Block helpers are identified by a <strong>#</strong></p>
+    <script id="block-expressions-template" type="text/x-handlebars-template"> 
+        {{#list people}}
+            First Name: {{firstName}}<br/>
+            Last Name: {{lastName}}<br/>
+            Bio Data (with escape): {{bioData}}<br/>
+            Bio Data (without escape): {{{bioData}}}
+        {{/list}}
+    </script>
+    <div id="block-expressions"></div>
+
+</body>
+
+</html> 

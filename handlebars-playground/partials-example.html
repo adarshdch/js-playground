@@ -1,0 +1,72 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Handlebars Playground - Helpers Example</title>
+    <script type="text/javascript" src="js/jquery-2.2.1.min.js"></script>
+    <script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
+    <script type="text/javascript">
+        //It is necessary to execute your DOM manipulation only after DOM has been loaded. Otherwise it may not work as expected.
+        $(document).ready(function(){
+            //Get the handlebars template html
+            var source = $("#some-template").html(); 
+
+            //Compile the template
+            var template = Handlebars.compile(source); 
+
+            var data = { 
+                users: [ 
+                { 
+                    person: {
+                        surName: "Mr.",
+                        firstName: "Mohit", 
+                        lastName: "Patil"
+                    },
+                    dob: '12 Jan 1985',
+                    twitter: "mpatil" 
+                }, 
+                {
+                    person: {
+                        surName: "Miss",
+                        firstName: "Reena", 
+                        lastName: "Dube"
+                    }, 
+                    dob: '22 Aug 1979',
+                    twitter: "rdube"
+                }, 
+                {
+                    person: {
+                        surName: "Mrs.",
+                        firstName: "Neha", 
+                        lastName: "Khanna"
+                    }, 
+                    dob: '10 Mar 1994',
+                    twitter: "nehakhanna"
+                } ]
+            }; 
+
+            Handlebars.registerPartial('personDetail', '<{{tagName}}> {{person.firstName}} {{person.lastName}}' + '<p class="social"><a href="http://twitter.com/{{twitter}}">{{twitter}}</a></p></{{tagName}}>');
+
+            //Pass the data to be processed to the template
+            var templateWithData = template(data);
+
+            //Render the transformed html on page
+            $('body').append(templateWithData);
+        });
+    </script>
+</head>
+
+<body>
+    <h3>Handlebars partials allow for code reuse by creating shared templates.</h3>
+    <!-- Create the handlebars template -->
+    <script id="some-template" type="text/x-handlebars-template"> 
+        <ul>
+            {{#each users}}
+                {{>personDetail tagName="li"}}
+            {{/each}}
+        </ul>
+    </script>
+
+</body>
+
+</html> 

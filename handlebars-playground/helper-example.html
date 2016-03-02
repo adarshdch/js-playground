@@ -1,0 +1,115 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Handlebars Playground - Helpers Example</title>
+    <script type="text/javascript" src="js/jquery-2.2.1.min.js"></script>
+    <script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
+    <script type="text/javascript">
+        //It is necessary to execute your DOM manipulation only after DOM has been loaded. Otherwise it may not work as expected.
+        $(document).ready(function(){
+            //Get the handlebars template html
+            var source = $("#some-template").html(); 
+
+            //Compile the template
+            var template = Handlebars.compile(source); 
+
+            //Create the data source for the template
+            var data = { 
+                users: [ 
+                { 
+                    person: {
+                        surName: "Mr.",
+                        firstName: "Mohit", 
+                        lastName: "Patil"
+                    },
+                    dob: '12 Jan 1985',
+                    twitter: "mpatil" 
+                }, 
+                {
+                    person: {
+                        surName: "Miss",
+                        firstName: "Reena", 
+                        lastName: "Dube"
+                    }, 
+                    dob: '22 Aug 1979',
+                    twitter: "rdube"
+                }, 
+                {
+                    person: {
+                        surName: "Mrs.",
+                        firstName: "Neha", 
+                        lastName: "Khanna"
+                    }, 
+                    dob: '10 Mar 1994',
+                    twitter: "nehakhanna"
+                } ]
+            }; 
+
+            //Register your custom helper to calculate full name from surName, firstName and lastName
+            Handlebars.registerHelper('fullName', function(person) {
+              return person.surName + " " + person.firstName + " " + person.lastName;
+            });
+
+            //Register your custom helper to calculate age from date of birth
+            Handlebars.registerHelper('age', function(dob) {
+              //var age = new Date() - new Date(dob);
+
+              var ageDifMs = Date.now() - new Date(dob).getTime();
+                var ageDate = new Date(ageDifMs); // miliseconds from epoch
+                return Math.abs(ageDate.getUTCFullYear() - 1970) + " Years";
+            });
+
+            Handlebars.registerHelper('link', function(text, url) {
+                //Handlebars will not escape a Handlebars.SafeString. If you write a helper that generates its own HTML, you will usually want to return a new Handlebars.SafeString(result). In such a circumstance, you will want to manually escape parameters.
+              text = Handlebars.Utils.escapeExpression(text);
+              url  = Handlebars.Utils.escapeExpression(url);
+
+              var result = '<a href="' + url + '">' + text + '</a>';
+
+              return new Handlebars.SafeString(result);
+            });
+
+            Handlebars.registerHelper('twitter-link', function(twitterId) {
+              text = Handlebars.Utils.escapeExpression(twitterId);
+              var result = 'https://twitter.com/' + text;
+              return new Handlebars.SafeString(result);
+            });
+
+            //Pass the data to be processed to the template
+            var templateWithData = template(data);
+
+            //Render the transformed html on page
+            $('body').append(templateWithData);
+        });
+    </script>
+</head>
+
+<body>
+    <!-- Create the handlebars template -->
+    <script id="some-template" type="text/x-handlebars-template"> 
+        <h3>If your helper returns HTML that you do not want escaped, make sure to return a new Handlebars.SafeString.</h3>
+        <table border="1">
+        <thead> 
+            <th>Full Name</th> 
+            <th>Date of birth</th> 
+            <th>Age</th> 
+            <th>Twitter</th> 
+        </thead> 
+        <tbody> 
+            {{#users}} 
+            <tr> 
+                <td>{{fullName person}}</td> 
+                <td>{{dob}}</td> 
+                <td>{{age dob}}</td>
+                <!-- You can do nesting of the handlebars helpers as below -->
+                <td>{{link twitter (twitter-link twitter)}}</td> 
+            </tr> 
+            {{/users}} 
+        </tbody> 
+    </table> 
+    </script>
+
+</body>
+
+</html> 
