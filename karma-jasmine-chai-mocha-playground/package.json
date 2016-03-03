@@ -1,0 +1,40 @@
+{
+  "name": "karma-jasmine-chai-mocha-playground",
+  "version": "1.0.0",
+  "description": "This serves as the playground for learning karma-jasmine-chai-mocha",
+  "main": "index.js",
+  "scripts": {
+    "test": "karma start karma.conf.js",
+    "full-test": "NODE_ENV=test karma start karma.conf.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adarshdch/js-playground/tree/master/karma-jasmine-chai-mocha-playground"
+  },
+  "keywords": [
+    "karma",
+    "seed",
+    "project"
+  ],
+  "author": "https://github.com/adarshdch",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adarshdch/js-playground/tree/master/karma-jasmine-chai-mocha-playground/issues"
+  },
+  "homepage": "https://github.com/adarshdch/js-playground/tree/master/karma-jasmine-chai-mocha-playground/",
+  "devDependencies": {
+    "chai": "^2.1.0",
+    "istanbul": "^0.3.6",
+    "jshint": "^2.6.0",
+    "karma": "^0.12.31",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^0.1.7",
+    "karma-cli": "0.0.4",
+    "karma-coverage": "^0.2.7",
+    "karma-fixture": "^0.2.1-1",
+    "karma-html2js-preprocessor": "^0.1.0",
+    "karma-mocha": "^0.1.10",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "mocha": "^2.1.0"
+  }
+}
