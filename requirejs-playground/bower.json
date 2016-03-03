@@ -1,0 +1,22 @@
+{
+  "name": "requirejs_playground",
+  "description": "A RequireJS Boilerplate &amp; Demo",
+  "main": "index.js",
+  "authors": [
+    "Adarsh Kumar"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/adarshdch/requirejs_playground",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
